@@ -1,0 +1,15 @@
+<!--
+  ~ Copyright (c) 2014.
+  -->
+
+<!DOCTYPE aspectj PUBLIC
+        "-//AspectJ//DTD//EN" "http://www.eclipse.org/aspectj/dtd/aspectj.dtd">
+<aspectj>
+
+    <weaver options="-showWeaveInfo -verbose -debug -XmessageHandlerClass:org.springframework.aop.aspectj.AspectJWeaverMessageHandler">
+
+        <include within="autowireproblem.*"/>
+
+    </weaver>
+
+</aspectj>

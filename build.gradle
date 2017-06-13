@@ -1,0 +1,47 @@
+group 'autowireproblem'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+
+ext {
+    springVersion = "4.2.1.RELEASE"
+}
+
+configurations {
+    javaAgentSpringInstrument
+
+    compile.exclude group: 'commons-logging'
+}
+
+
+test.doFirst {
+    jvmArgs "-javaagent:${configurations.javaAgentSpringInstrument.asPath}"
+}
+
+test {
+    systemProperties 'logback.configurationFile': new File(projectDir, 'src/main/resources/logback.xml').absolutePath
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.springframework:spring-core:${springVersion}"
+    compile "org.springframework:spring-beans:${springVersion}"
+    compile "org.springframework:spring-context:${springVersion}"
+    compile "org.springframework:spring-aspects:${springVersion}"
+    compile "org.springframework:spring-tx:${springVersion}"
+
+    javaAgentSpringInstrument "org.springframework:spring-instrument:${springVersion}"
+
+    testCompile "org.springframework:spring-test:${springVersion}"
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.slf4j:slf4j-api:1.7.+'
+    testCompile 'org.slf4j:jcl-over-slf4j:1.7.+'
+    testCompile 'ch.qos.logback:logback-classic:1.+'
+}
